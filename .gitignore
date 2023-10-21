@@ -1,3 +1,5 @@
 ## Everything under build direcotry
 build
 
+## VSCode settings
+.vscode
