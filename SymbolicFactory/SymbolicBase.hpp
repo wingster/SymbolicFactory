@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+// Preprocessor macro to setup the basic structure to enable dynamic instance creation by "symbolic" class name
+// TODO: Support for classes with multiple inheritance ??
 #define DECLARE_SYMBOLIC(symbol) \
     class symbol : protected winglib::SymbolicBase \
     { \
@@ -13,6 +15,7 @@
                 return new symbol(); \
             } \
 
+// Preprocessor macro to instantiate the exemplar instance for the factory map 
 #define IMPLEMENT_SYMBOLIC(symbol) \
 static symbol symbol##_exemplar(SymbolicBase::demangledName(typeid(symbol).name()).c_str(), (SymbolicBase *)nullptr); 
 
@@ -34,8 +37,8 @@ class SymbolicBase
         // takes a void* pointer for now, but should update to a input dictionary for general purpose construction
         virtual SymbolicBase* create(void*) const = 0;
 
-        // Utility function (thus static) to get demangled type name - compiler/platform specific
-        // Consider moving this out from this class to a general purpose utilities to hide platform/compiler specific implementations
+        // utility function (thus static) to get demangled type name - compiler/platform specific
+        // TODO: Consider moving this out from the base class to a general purpose utilities to hide platform/compiler specific implementations
         static std::string demangledName(const char *);
     protected:
         SymbolicBase() = default;

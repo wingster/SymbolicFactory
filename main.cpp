@@ -1,5 +1,5 @@
-#include "SymbolicBase.hpp"
-#include "SymbolicFactory.hpp"
+#include "SymbolicFactory/SymbolicBase.hpp"
+#include "SymbolicFactory/SymbolicFactory.hpp"
 #include <iostream>
 #include <exception>
 

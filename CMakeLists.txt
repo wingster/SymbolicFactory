@@ -16,6 +16,9 @@ target_compile_options(project_compiler_flags INTERFACE
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
-add_executable(SymbolicTest main.cpp SymbolicFactory.cpp SymbolicBase.cpp)
+add_subdirectory(SymbolicFactory)
 
-target_link_libraries(SymbolicTest project_compiler_flags)
+# Simple Test executable depends on SymbolicFactory library
+add_executable(SymbolicTest main.cpp)
+target_link_libraries(SymbolicTest PUBLIC SymbolicFactory project_compiler_flags)
+
