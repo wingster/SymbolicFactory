@@ -18,6 +18,18 @@ target_compile_options(project_compiler_flags INTERFACE
 
 add_subdirectory(SymbolicFactory)
 
+message("project binary dir : " ${PROJECT_BINARY_DIR})
+
+##
+## TESTS
+## create and configure the unit test target
+##
+## Not using CTest/CDash for now
+##include(CTest)
+##enable_testing()
+add_subdirectory(tests)
+
+
 # Simple Test executable depends on SymbolicFactory library
 add_executable(SymbolicTest main.cpp)
 target_link_libraries(SymbolicTest PUBLIC SymbolicFactory project_compiler_flags)

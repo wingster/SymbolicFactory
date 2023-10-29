@@ -4,3 +4,7 @@ build
 ## VSCode settings
 .vscode
 *.code-workspace
+
+## Local Python venv
+.venv
+__pycache__
