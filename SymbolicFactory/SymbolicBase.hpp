@@ -3,6 +3,7 @@
 
 // Preprocessor macro to setup the basic structure to enable dynamic instance creation by "symbolic" class name
 // TODO: Support for classes with multiple inheritance ??
+// TODO: create at this time invokes default constructor only - need to pass in the input pointer
 #define DECLARE_SYMBOLIC(symbol) \
     class symbol : protected winglib::SymbolicBase \
     { \
@@ -17,7 +18,7 @@
 
 // Preprocessor macro to instantiate the exemplar instance for the factory map 
 #define IMPLEMENT_SYMBOLIC(symbol) \
-static symbol symbol##_exemplar(SymbolicBase::demangledName(typeid(symbol).name()).c_str(), (SymbolicBase *)nullptr); 
+static symbol symbol##_exemplar(winglib::SymbolicBase::demangledName(typeid(symbol).name()).c_str(), (winglib::SymbolicBase *)nullptr); 
 
 
 

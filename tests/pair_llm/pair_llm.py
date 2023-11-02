@@ -1,7 +1,33 @@
 import os
+import sys
 from utils import get_api_key
 import google.generativeai as palm
 from google.api_core import retry, client_options as client_options_lib
+
+def read_file(input_file_name):
+# Open the input file and read it into a string variable
+    try:
+        with open(input_file_name, "r") as f:
+            file_contents = f.read()
+    except FileNotFoundError:
+        print("Error: could not find input file {}".format(input_file_name))
+        sys.exit(1)
+    # Print the contents of the input file
+    return file_contents
+
+
+# Check if the user provided an input file name
+if len(sys.argv) < 4:
+    print("Usage: python ", sys.argv[0],  " <prompt_file> <input_file_name> <output_file_name")
+    sys.exit(1)
+
+# Get the input file name from the command line arguments
+prompt_file_name = sys.argv[1]
+input_file_name = sys.argv[2]
+output_file_name = sys.argv[3]
+
+prompt_template = read_file(prompt_file_name)
+input_code = read_file(input_file_name)
 
 api_key = get_api_key()
 client_options=client_options_lib.ClientOptions(
@@ -31,42 +57,14 @@ def generate_text(prompt,
 response = palm.generate_text(prompt="The opposite of hot is")
 print(response.result) #  'cold.'
 
-import pprint
-for model in palm.list_models():
-    pprint.pprint(model) # 🦎🦦🦬🦄
-
-
-CODE_BLOCK = """ 
-# replace this with your own code
-def foo(a):
-  b = a + 1
-  return 2*b
-"""
-
-prompt_template = """
-Can you please explain how this code works?
-
-{question}
-
-Use a lot of detail and make it as clear as possible.
-"""
+print (prompt_template)
 
 completion = generate_text(
-    prompt = prompt_template.format(question=CODE_BLOCK)
+    prompt = prompt_template.format(code=input_code)
 )
 print(completion.result)
 
-
-prompt_template = """
-Please write technical documentation for this code and \n
-make it easy for a non swift developer to understand:
-
-{question}
-
-Output the results in markdown
-"""
-
-completion = generate_text(
-    prompt = prompt_template.format(question=CODE_BLOCK)
-)
-print(completion.result)
+# Open the output file for writing.
+with open(output_file_name, 'w') as output_file:
+    # Write the Python string to the output file.
+    output_file.write(completion.result)
