@@ -16,6 +16,21 @@ target_compile_options(project_compiler_flags INTERFACE
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
-add_executable(SymbolicTest main.cpp SymbolicFactory.cpp SymbolicBase.cpp)
+add_subdirectory(SymbolicFactory)
 
-target_link_libraries(SymbolicTest project_compiler_flags)
+message("project binary dir : " ${PROJECT_BINARY_DIR})
+
+##
+## TESTS
+## create and configure the unit test target
+##
+## Not using CTest/CDash for now
+##include(CTest)
+##enable_testing()
+add_subdirectory(tests)
+
+
+# Simple Test executable depends on SymbolicFactory library
+add_executable(SymbolicTest main.cpp)
+target_link_libraries(SymbolicTest PUBLIC SymbolicFactory project_compiler_flags)
+

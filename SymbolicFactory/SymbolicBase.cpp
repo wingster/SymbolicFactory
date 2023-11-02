@@ -3,7 +3,7 @@
 #include <typeinfo>
 #include <string>
 #include <exception>
-#include <cxxabi.h>
+#include <cxxabi.h>   // TODO: This header may be platform dependent, consider switching to boost class demanagler
 
 namespace winglib
 {
@@ -14,6 +14,7 @@ namespace winglib
         SymbolicFactory::registerSymbol(std::string(symbolicName), this);
     }
 
+    // Using cxxabi to demangle class name. Consider switching to a more generic function
     std::string SymbolicBase::demangledName(const char *inputName)
     {
         size_t demangledLength = 0;
