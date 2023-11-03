@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include <string>
 #include <exception>
+#include <stdexcept>
 #include <cxxabi.h>   // TODO: This header may be platform dependent, consider switching to boost class demanagler
 
 namespace winglib

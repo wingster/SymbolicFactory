@@ -8,7 +8,7 @@
     class symbol : protected winglib::SymbolicBase \
     { \
         public: \
-            symbol(const char *symbol, SymbolicBase *) : SymbolicBase(symbol, (SymbolicBase *)nullptr){}; \
+            symbol(const char *symName, SymbolicBase *) : SymbolicBase(symName, (SymbolicBase *)nullptr){}; \
             static std::string symbolName() { \
                 return winglib::SymbolicBase::demangledName(typeid(symbol).name()); \
             } \
