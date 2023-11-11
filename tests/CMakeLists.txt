@@ -10,8 +10,8 @@ set(SymbolicFactory_include ${PROJECT_SOURCE_DIR}/SymbolicFactory)
 set(SymbolicFactory_lib ${PROJECT_BIN_DIR}/SymbolicFactory})
 
 # opt to use the long form than generator expressions to make the logic more descriptive
-if (DEFINED ENV{BOOST_HOME})
-    set(boost_home $ENV{BOOST_HOME})
+if (DEFINED ENV{BOOST_ROOT})
+    set(boost_home $ENV{BOOST_ROOT})
 else ()
     set(boost_home "/opt/homebrew")
 endif ()
