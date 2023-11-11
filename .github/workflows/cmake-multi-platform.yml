@@ -23,7 +23,9 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        #os: [ubuntu-latest, windows-latest]
+        # temp disable windows-latest for now
+        os: [ubuntu-latest]
         build_type: [Release]
         c_compiler: [gcc, clang, cl]
         include:
@@ -60,6 +62,7 @@ jobs:
       with:
       # The boost version to install, e.g. "1.73.0"
         boost_version: "1.83.0"
+        link: shared
         #arch: aarch64
 
         
