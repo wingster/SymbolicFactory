@@ -16,8 +16,8 @@ else ()
     set(boost_home "/opt/homebrew")
 endif ()
 
-message(STATUS "boost_home = ${boost_home}"}
-message(STATUS "ENV{BOOST_ROOT} = $ENV{BOOST_ROOT}"}
+message(STATUS "boost_home = ${boost_home}")
+message(STATUS "ENV{BOOST_ROOT} = $ENV{BOOST_ROOT}")
 
 # TODO: for include - test folder should pickup the header from the source folder instead
 # of the installed dir. The installed dir should be populated after the successful build/tests
