@@ -10,16 +10,16 @@ set(SymbolicFactory_include ${PROJECT_SOURCE_DIR}/SymbolicFactory)
 set(SymbolicFactory_lib ${PROJECT_BIN_DIR}/SymbolicFactory})
 
 # opt to use the long form than generator expressions to make the logic more descriptive
-if (DEFINED ENV{BOOST_ROOT})
-    message(STATUS "BOOST_ROOT = $ENV{BOOST_ROOT}")
-    set(boost_home $ENV{BOOST_ROOT})
+if (DEFINED ENV{BOOST_HOME})
+    message(STATUS "BOOST_HOME = $ENV{BOOST_HOME}")
+    set(boost_home $ENV{BOOST_HOME})
 else ()
-    message(STATUS "BOOST_ROOT not defined - setting to default")
+    message(STATUS "BOOST_HOME not defined - setting to default")
     set(boost_home "/opt/homebrew")
 endif ()
 
 message(STATUS "boost_home = ${boost_home}")
-message(STATUS "env{BOOST_ROOT} = $ENV{BOOST_ROOT}")
+message(STATUS "env{BOOST_HOME} = $ENV{BOOST_HOME}")
 
 # TODO: for include - test folder should pickup the header from the source folder instead
 # of the installed dir. The installed dir should be populated after the successful build/tests
