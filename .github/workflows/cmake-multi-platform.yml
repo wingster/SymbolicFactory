@@ -54,7 +54,8 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: install-boost
+    - name: Install Boost
+      id: install-boost
       uses: MarkusJx/install-boost@v2.4.4
       with:
       # The boost version to install, e.g. "1.73.0"
