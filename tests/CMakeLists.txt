@@ -9,20 +9,16 @@ add_executable(boost_test_runner main/ref.cpp main/SymbolicFactoryTest.cpp pair_
 set(SymbolicFactory_include ${PROJECT_SOURCE_DIR}/SymbolicFactory)
 set(SymbolicFactory_lib ${PROJECT_BIN_DIR}/SymbolicFactory})
 
-# opt to use the long form than generator expressions to make the logic more descriptive
-if (DEFINED ENV{BOOST_HOME})
-    set(boost_home $ENV{BOOST_HOME})
-else ()
-    set(boost_home "/opt/homebrew")
-endif ()
+find_package(Boost REQUIRED COMPONENTS unit_test_framework)
+
+message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
+message(STATUS "Boost_LIBRARIES = ${Boost_LIBRARIES}")
+message(STATUS "Boost_LIBRARY_DIRS = ${Boost_LIBRARY_DIRS}")
+
 
 # TODO: for include - test folder should pickup the header from the source folder instead
 # of the installed dir. The installed dir should be populated after the successful build/tests
-target_include_directories(boost_test_runner PUBLIC ${boost_home}/include ${SymbolicFactory_include})
-target_link_directories(boost_test_runner PUBLIC ${boost_home}/lib ${SymbolicFactory_lib})
+target_include_directories(boost_test_runner PUBLIC ${Boost_INCLUDE_DIRS} ${SymbolicFactory_include})
+target_link_directories(boost_test_runner PUBLIC ${Boost_LIBRARY_DIRS} ${SymbolicFactory_lib})
+target_link_libraries(boost_test_runner PUBLIC ${Boost_LIBRARIES} SymbolicFactory project_compiler_flags)
 
-target_link_libraries(boost_test_runner PUBLIC boost_unit_test_framework SymbolicFactory project_compiler_flags)
-
-
-#add_subdirectory(main)
-#add_subdirectory(pair_llm)
