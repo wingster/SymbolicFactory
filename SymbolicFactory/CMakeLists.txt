@@ -2,6 +2,11 @@ add_library(SymbolicFactory SHARED SymbolicBase.cpp SymbolicFactory.cpp)
 
 # Add required Boost components for this sub-module
 # boost.core (demangle.hpp)
+# reference for windows build : https://stackoverflow.com/questions/28887680/linking-boost-library-with-boost-use-static-lib-off-on-windows
+
+set (Boost_USE_STATIC_LIBS OFF)
+set (Boost_USE_MULTITHREADED ON)
+
 find_package(Boost REQUIRED COMPONENTS system)
 
 message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
