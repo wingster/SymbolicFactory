@@ -4,7 +4,7 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
-#include <cxxabi.h>   // TODO: This header may be platform dependent, consider switching to boost class demanagler
+#include <boost/core/demangle.hpp>
 
 namespace winglib
 {
@@ -15,38 +15,21 @@ namespace winglib
         SymbolicFactory::registerSymbol(std::string(symbolicName), this);
     }
 
-    // Using cxxabi to demangle class name. Consider switching to a more generic function
+    // Using boost to demangle class name. Wrapped in this function as it was hidding platform specifc abi::cxa_demangle
     std::string SymbolicBase::demangledName(const char *inputName)
     {
-        size_t demangledLength = 0;
-        int status = 0;
-        char *resultPtr = abi::__cxa_demangle(inputName, NULL, &demangledLength, &status);
-        std::string ret;
-        std::string exMsg;
-        switch (status)
+        boost::core::scoped_demangled_name demangled(inputName);
+        std::string ret, exMsg;
+        const char *resultPtr = demangled.get();
+        if (!resultPtr)
         {
-        case 0:
-            ret = resultPtr;
-            delete (resultPtr);
-
-            return ret;
-        case -1:
-            exMsg = "A memory allocation failure occured";
-            break;
-        case -2:
-            exMsg = "Mangled_name [" + std::string(inputName) + "] is not a valid name under the C++ ABI mangling rules";
-            break;
-        case -3:
-            exMsg = "One of the arugments is invalid";
-            break;
-        default:
-            exMsg = "Unexpected exception in demangledName";
+            exMsg = "Mangled_name [" + std::string(inputName) + "] is not a valid for boost::core::demangler";
+            auto re = runtime_error(exMsg);
+            throw(re);
         }
-        // Exception - throw RunTime error w/ exception message
-        auto re = runtime_error(exMsg);
-        throw(re);
+        ret = resultPtr;
+        return ret;
     }
-
 
     std::string SymbolicBase::name() const
     {
