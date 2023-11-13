@@ -9,6 +9,9 @@ add_executable(boost_test_runner main/ref.cpp main/SymbolicFactoryTest.cpp pair_
 set(SymbolicFactory_include ${PROJECT_SOURCE_DIR}/SymbolicFactory)
 set(SymbolicFactory_lib ${PROJECT_BINARY_DIR}/SymbolicFactory)
 
+set (Boost_USE_STATIC_LIBS OFF)
+set (Boost_USE_MULTITHREADED ON)
+
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
 
 message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
