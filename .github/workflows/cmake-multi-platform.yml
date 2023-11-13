@@ -23,33 +23,34 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        #os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         build_type: [Release]
         c_compiler: [gcc, clang, cl]
-        toolset: [gcc, clang, msvc]
+        #toolset: [gcc, msvc]
         include:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
-            toolset: msvc
+            #toolset: msvc
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-            toolset: gcc
+            #toolset: gcc
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
-            toolset: clang
+            #toolset: gcc
         exclude:
           - os: windows-latest
             c_compiler: gcc
-            toolset: gcc
+            #toolset: gcc
           - os: windows-latest
             c_compiler: clang
-            toolset: clang
+            #toolset: gcc
           - os: ubuntu-latest
             c_compiler: cl
-            toolset: msvc
+            #toolset: msvc
 
     steps:
     - uses: actions/checkout@v3
@@ -68,7 +69,7 @@ jobs:
       # The boost version to install, e.g. "1.73.0"
         boost_version: "1.83.0"
         link: shared
-        toolset: ${{ matrix.toolset }}
+        #toolset: ${{ matrix.toolset }}
         #arch: aarch64
               
     - name: Configure CMake
