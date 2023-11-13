@@ -1,4 +1,5 @@
 #define BOOST_TEST_MODULE SymbolicFactoryTest
+#define BOOST_TEST_DYN_LINK
 #include <boost/test/included/unit_test.hpp>
 #include <boost/core/demangle.hpp>  // to demanagle typeid names
 
