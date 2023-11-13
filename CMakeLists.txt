@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 # project name and version
 project(wl VERSION 0.0)
 
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
 # specify the C++ standard
 add_library(project_compiler_flags INTERFACE)
 target_compile_features(project_compiler_flags INTERFACE cxx_std_20)
@@ -15,6 +17,8 @@ target_compile_options(project_compiler_flags INTERFACE
   "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
+
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
 # build sub-modules
 add_subdirectory(SymbolicFactory)
