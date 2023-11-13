@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.15)
 project(wl VERSION 0.0)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set(BUILD_SHARED_LIBS TRUE)
+endif()
 
 # specify the C++ standard
 add_library(project_compiler_flags INTERFACE)
