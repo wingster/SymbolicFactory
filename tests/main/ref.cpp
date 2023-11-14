@@ -1,5 +1,4 @@
 #define BOOST_TEST_DYN_LINK
-//#define BOOST_ALL_NO_LIB
 #include <boost/test/unit_test.hpp>
 
 // Reference code to check if the boost unit test setup is proper - version upgrades...etc

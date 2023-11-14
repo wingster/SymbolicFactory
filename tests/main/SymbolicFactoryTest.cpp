@@ -1,8 +1,7 @@
 #define BOOST_TEST_MODULE SymbolicFactoryTest
 #define BOOST_TEST_DYN_LINK
-//#define BOOST_ALL_NO_LIB
-//#include <boost/test/included/unit_test.hpp>
 #include <boost/test/unit_test.hpp>
+
 #include <boost/core/demangle.hpp>  // to demanagle typeid names
 
 #include "SymbolicFactory.hpp"
@@ -77,4 +76,16 @@ BOOST_AUTO_TEST_CASE(SymbolicBase_demangledName)
     BOOST_CHECK(!boost_name.empty());
     BOOST_CHECK(!symbolic_name.empty());
     BOOST_TEST(boost_name == symbolic_name);
+}
+
+BOOST_AUTO_TEST_CASE(SymbolicBase_invalid_demangleName)
+{
+    auto name = "invalid";
+    std::function<bool(const std::exception &)> fp = [](const std::exception &e) {
+        //cout << e.what() << endl; // expecting run_time error with : Mangled_name [" + std::string(inputName) + "] is not a valid for boost::core::demangler
+        return e.what() == std::string("Mangled_name [invalid] is not a valid input for boost::core::demangler");
+    };
+
+    // Get the symbol from the factory
+    BOOST_CHECK_EXCEPTION(winglib::SymbolicBase::demangledName(name), std::runtime_error, fp);
 }

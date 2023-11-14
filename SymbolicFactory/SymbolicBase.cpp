@@ -23,7 +23,7 @@ namespace winglib
         const char *resultPtr = demangled.get();
         if (!resultPtr)
         {
-            exMsg = "Mangled_name [" + std::string(inputName) + "] is not a valid for boost::core::demangler";
+            exMsg = "Mangled_name [" + std::string(inputName) + "] is not a valid input for boost::core::demangler";
             auto re = runtime_error(exMsg);
             throw(re);
         }

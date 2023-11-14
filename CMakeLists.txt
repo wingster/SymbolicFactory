@@ -6,7 +6,7 @@ project(wl VERSION 0.0)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-    set(BUILD_SHARED_LIBS TRUE)
+    #set(BUILD_SHARED_LIBS TRUE) # Verify this line once Windows build is enabled
 endif()
 
 # specify the C++ standard
@@ -22,8 +22,6 @@ target_compile_options(project_compiler_flags INTERFACE
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
-
 # build sub-modules
 add_subdirectory(SymbolicFactory)
 add_subdirectory(tests)
@@ -33,7 +31,6 @@ message("project binary dir : " ${PROJECT_BINARY_DIR})
 # Simple Test executable depends on SymbolicFactory library
 add_executable(SymbolicTest main.cpp)
 target_link_libraries(SymbolicTest PUBLIC SymbolicFactory project_compiler_flags)
-
 
 ##
 ## TESTS
