@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION 3.15)
 # project name and version
 project(wl VERSION 0.0)
 
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    #set(BUILD_SHARED_LIBS TRUE) # Verify this line once Windows build is enabled
+endif()
+
 # specify the C++ standard
 add_library(project_compiler_flags INTERFACE)
 target_compile_features(project_compiler_flags INTERFACE cxx_std_20)
@@ -25,7 +31,6 @@ message("project binary dir : " ${PROJECT_BINARY_DIR})
 # Simple Test executable depends on SymbolicFactory library
 add_executable(SymbolicTest main.cpp)
 target_link_libraries(SymbolicTest PUBLIC SymbolicFactory project_compiler_flags)
-
 
 ##
 ## TESTS
