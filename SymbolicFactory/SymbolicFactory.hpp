@@ -11,15 +11,15 @@ namespace winglib
     {
     public:
         // Get singleton factory instance
-        static SymbolicFactory *getInstance(); 
-        static SymbolicBase *getSymbolic(const string &symbol, void *);
+        static shared_ptr<SymbolicFactory> getInstance(); 
+        static shared_ptr<SymbolicBase> getSymbolic(const string &symbol, void *);
 
     private:
         SymbolicFactory() = default; // make default ctor private
-        map<string, SymbolicBase *> factoryMap_;
+        map<string, SymbolicBase*> factoryMap_;
         
         // Add symbols to the factory map -> only allowed from Symbolic ctors
-        static SymbolicBase *registerSymbol(const string &symbol, SymbolicBase *classPtr);
+        static void registerSymbol(const string &symbol, SymbolicBase* exemplar);
         friend class SymbolicBase;
     };
 }

@@ -40,9 +40,9 @@ IMPLEMENT_SYMBOLIC(ExecutionProvider)
 }
 ;
 
-int main(int argc, char **argv)
+int main(int, char **)
 {
-    SymbolicFactory *sf = SymbolicFactory::getInstance();
+    auto sf = SymbolicFactory::getInstance();
 
     //
     std::cout << typeid(wingTest::ExecutionProvider).name() << std::endl;
@@ -51,11 +51,11 @@ int main(int argc, char **argv)
     try
     {
         // call factory using class static sybolName() method - allow compile time check
-        SymbolicBase *sb = sf->getSymbolic(wingTest::DataProvider::symbolName(), nullptr);
+        auto sb = sf->getSymbolic(wingTest::DataProvider::symbolName(), nullptr);
         std::cout << "Hello World: " << sb->name() << std::endl;
 
         // call factory using a hand crafted string (i.e. read via config file)
-        SymbolicBase *sb2 = sf->getSymbolic("wingTest::ExecutionProvider", nullptr);
+        auto sb2 = sf->getSymbolic("wingTest::ExecutionProvider", nullptr);
         std::cout << "Hello World: " << sb2->name() << std::endl;
         // std::cout << wingTest::ExecutionProvider::symbolName() << std::endl;
         exit(0);

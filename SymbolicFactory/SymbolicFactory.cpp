@@ -6,20 +6,19 @@
 
 namespace winglib{
 
-SymbolicFactory *SymbolicFactory::getInstance()
+shared_ptr<SymbolicFactory> SymbolicFactory::getInstance()
 {
-    static auto *instance = new SymbolicFactory();
+    static shared_ptr<SymbolicFactory> instance(new SymbolicFactory()); // for clang it cannot take make_shared<SymbolicFactory>() given ctor is private
     return instance;
 }
 
-SymbolicBase *SymbolicFactory::registerSymbol(const string& symbol, SymbolicBase *classPtr)
+void SymbolicFactory::registerSymbol(const string& symbol, SymbolicBase* classPtr)
 {
     std::cout << "SymbolicFactory::registerSymbol(" << symbol << "," << classPtr << ")" << std::endl;
-    auto *sf = getInstance();
+    auto sf = getInstance();
     auto &map = sf->factoryMap_;
     // check if symbol alrady exists or registered
     const auto& mapiter = map.find(symbol);
-    SymbolicBase *ret = nullptr;
     if(mapiter != map.end()){
         //auto *exemplar = mapiter->second;  //TODO: Use exemplar address in error message
         string msg = "Symbol name : " + symbol + " already registered"; 
@@ -27,26 +26,23 @@ SymbolicBase *SymbolicFactory::registerSymbol(const string& symbol, SymbolicBase
         throw(re);
     }
     else{
-        
         map[symbol] = classPtr;
-        ret = classPtr;
     }
-    return ret;
+    return;
 }
 
-SymbolicBase *SymbolicFactory::getSymbolic(const string& symbol, void *arg)
+shared_ptr<SymbolicBase> SymbolicFactory::getSymbolic(const string& symbol, void *arg)
 {
     // find the symbol in the factory map
-    auto *sf = getInstance();
+    auto sf = getInstance();
     const auto& map = sf->factoryMap_;
     const auto& mapiter = map.find(symbol);
-    SymbolicBase *ret = nullptr;
+    shared_ptr<SymbolicBase> ret = nullptr;
     if(mapiter != map.end()){
-        auto *exemplar = mapiter->second;  
+        auto exemplar = mapiter->second;  
         ret = exemplar->create(arg); 
     }
     else{
-        
         string msg = "Unexpected symbol name : " + symbol; 
         auto re = runtime_error(msg);
         throw(re);
