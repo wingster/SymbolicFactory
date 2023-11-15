@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 
 // Preprocessor macro to setup the basic structure to enable dynamic instance creation by "symbolic" class name
 // TODO: Support for classes with multiple inheritance ??
