@@ -38,7 +38,7 @@ namespace winglib
         return demangledName(typeid(*this).name());
     }
 
-    SymbolicBase *SymbolicBase::create(void *) const
+    std::shared_ptr<SymbolicBase> SymbolicBase::create(void *) const
     {
         string msg = "SymbolicBase::create() pure virtual invoked";
 

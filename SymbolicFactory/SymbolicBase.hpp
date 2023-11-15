@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 
 // Preprocessor macro to setup the basic structure to enable dynamic instance creation by "symbolic" class name
 // TODO: Support for classes with multiple inheritance ??
@@ -12,15 +13,19 @@
             static std::string symbolName() { \
                 return winglib::SymbolicBase::demangledName(typeid(symbol).name()); \
             } \
-            SymbolicBase *create(void *) const {\
-                return new symbol(); \
+            std::shared_ptr<SymbolicBase> create(void *) const {\
+                SymbolicBase* instance = new symbol(); \
+                return std::shared_ptr<SymbolicBase>(instance); \
             } \
 
 // Preprocessor macro to instantiate the exemplar instance for the factory map 
 #define IMPLEMENT_SYMBOLIC(symbol) \
 static symbol symbol##_exemplar(winglib::SymbolicBase::demangledName(typeid(symbol).name()).c_str(), (winglib::SymbolicBase *)nullptr); 
 
-
+/*
+static auto* symbol##_exemplar = new symbol(winglib::SymbolicBase::demangledName(typeid(symbol).name()).c_str(), (winglib::SymbolicBase *)nullptr); \
+static shared_ptr<winglib::SymbolicBase> symbol##_exemplar_shared((winglib::SymbolicBase*)symbol##_exemplar);
+*/
 
 namespace winglib{
 
@@ -36,7 +41,7 @@ class SymbolicBase
 
         // create() : returns a new instance, used by symbolic factory
         // takes a void* pointer for now, but should update to a input dictionary for general purpose construction
-        virtual SymbolicBase* create(void*) const = 0;
+        virtual std::shared_ptr<SymbolicBase> create(void*) const = 0;
 
         // utility function (thus static) to get demangled type name - compiler/platform specific
         // TODO: Consider moving this out from the base class to a general purpose utilities to hide platform/compiler specific implementations

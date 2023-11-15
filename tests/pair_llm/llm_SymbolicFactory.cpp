@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_SUITE(SymbolicFactoryTest)
 BOOST_AUTO_TEST_CASE(getSymbolicWithValidSymbol)
 {
     // Get singleton factory instance
-    SymbolicFactory *factory = SymbolicFactory::getInstance();
+    auto factory = SymbolicFactory::getInstance();
 
     // Create a Symbolic object
     //SymbolicBase *symbol = new Symbolic("test");
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(getSymbolicWithValidSymbol)
     //factory->registerSymbol("test", symbol);
 
     // Get the symbol from the factory
-    SymbolicBase *result = factory->getSymbolic("test", nullptr);
+    auto result = factory->getSymbolic("test", nullptr);
 
     // Check that the symbols are equal
     //BOOST_CHECK_EQUAL(symbol, result);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(getSymbolicWithValidSymbol)
 BOOST_AUTO_TEST_CASE(getSymbolicWithInvalidSymbol)
 {
     // Get singleton factory instance
-    SymbolicFactory *factory = SymbolicFactory::getInstance();
+    auto factory = SymbolicFactory::getInstance();
 
     std::function<bool(const std::exception &)> fp = [](const std::exception &e) {
         return e.what() == std::string("Unexpected symbol name : invalid");

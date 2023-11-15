@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(SymbolicFactory_getSymbolicTest)
 {
     using namespace winglib;
     const auto& symbolic_name = SymbolicTest::symbolName();
-    SymbolicBase* symbolic = SymbolicFactory::getSymbolic(symbolic_name, nullptr);
+    auto symbolic = SymbolicFactory::getSymbolic(symbolic_name, nullptr);
 
     BOOST_ASSERT(symbolic);
     BOOST_TEST(symbolic_name == symbolic->name());
@@ -52,10 +52,9 @@ BOOST_AUTO_TEST_CASE(SymbolicBase_name)
     const auto&  dataProviderStaticName = DataProviderTest::symbolName();
     
     using namespace winglib;
-    SymbolicBase *dp = SymbolicFactory::getSymbolic(dataProviderStaticName, nullptr);
+    auto dp = SymbolicFactory::getSymbolic(dataProviderStaticName, nullptr);
     const auto&  dataProviderName = dp->name();
     
-    delete dp;
     BOOST_CHECK(!dataProviderStaticName.empty());
     BOOST_CHECK(!dataProviderName.empty());
     BOOST_TEST(dataProviderStaticName == dataProviderName);
